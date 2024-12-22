@@ -157,7 +157,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* General Styling */
 body {
   font-family: Arial, sans-serif;
