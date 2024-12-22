@@ -1,8 +1,8 @@
 <template>
   <main>
     <div class="container">
-      <!-- Search Container -->
-      <div id="search-container">
+      <!-- Search Section -->
+      <section id="search-container">
         <h1>Countries</h1>
         <div class="search-container">
           <input
@@ -11,14 +11,12 @@
             class="search-input"
             placeholder="Search countries"
           />
-          <button id="search-btn" class="search-btn" @click="search">
-            &#128269;
-          </button>
+          <button id="search-btn" class="search-btn" @click="search">🔍</button>
         </div>
-      </div>
+      </section>
 
-      <!-- Cards Container -->
-      <div id="cards-container">
+      <!-- Countries Cards Section -->
+      <section id="cards-container">
         <div
           v-for="country in filteredCountries"
           :key="country.cca3"
@@ -39,13 +37,17 @@
                   : "N/A"
               }}
             </p>
-            <p class="card-datetime">Region: {{ country.region }}</p>
+            <p class="card-region">Region: {{ country.region }}</p>
             <div class="card-buttons">
-              <button class="card-button" @click="openMap(country.latlng)">
+              <button
+                class="card-button"
+                v-if="country.maps?.googleMaps"
+                @click="openMap(country.maps.googleMaps)"
+              >
                 Show Map
               </button>
               <button class="card-button" @click="viewDetails(country.cca3)">
-                Detail
+                Details
               </button>
             </div>
           </div>
@@ -53,7 +55,7 @@
         <div v-if="filteredCountries.length === 0 && countries.length > 0">
           <p>No countries found.</p>
         </div>
-      </div>
+      </section>
     </div>
   </main>
 </template>
@@ -84,17 +86,16 @@ export default {
       )
     );
 
-    const openMap = (latlng) => {
-      if (latlng) {
-        const [lat, lng] = latlng;
-        window.open(`https://www.google.com/maps?q=${lat},${lng}`, "_blank");
+    const openMap = (googleMapsLink) => {
+      if (googleMapsLink) {
+        window.open(googleMapsLink, "_blank");
       } else {
-        alert("Location not available");
+        alert("Map link not available");
       }
     };
 
-    const viewDetails = (name) => {
-      navigateTo(`/detail/${name}`);
+    const viewDetails = (cca3) => {
+      navigateTo(`/detail/${cca3}`);
     };
 
     const search = () => {
@@ -116,60 +117,58 @@ export default {
 </script>
 
 <style scoped>
-/* Body Styling */
+/* General Styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100vh; /* Full height of the viewport */
 }
 
 main {
-  width: 100%; /* Ensure the main section takes up the full width */
   display: flex;
-  justify-content: center; /* Center content horizontally */
+  justify-content: center;
+  width: 100%;
 }
 
 .container {
-  width: 60%; /* 60% of the screen width */
-  height: 100vh; /* Full height of the viewport */
-  background-color: #fff; /* White background for the container */
+  width: 60%;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  background-color: #fff;
 }
 
 .common-box-shadow {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box-shadow */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Search container to align elements */
-.search-container {
-  display: flex;
-  align-items: center;
-  border: 1px solid black;
-  overflow: hidden;
+/* Search Section Styling */
+#search-container {
   margin-bottom: 10px;
 }
 
-/* Input field styling */
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+  overflow: hidden;
+}
+
 .search-input {
+  flex: 1;
   border: none;
   padding: 8px 12px;
   font-size: 16px;
   outline: none;
-  flex: 1;
 }
 
-/* Button styling with magnifying glass */
 .search-btn {
-  background-color: white;
   border: none;
+  background-color: transparent;
   padding: 8px;
   font-size: 20px;
   cursor: pointer;
-  background-color: transparent;
-  color: black;
+  color: #000;
   transition: background-color 0.3s;
 }
 
@@ -177,69 +176,59 @@ main {
   background-color: #f0f0f0;
 }
 
+/* Cards Section Styling */
 #cards-container {
   margin-top: 16px;
 }
-#search-container {
-  margin-bottom: 1px;
-}
-/* Card container styling */
+
 .card {
   display: flex;
-  background-color: white;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  background-color: #fff;
+  margin: 20px 0;
   padding: 10px;
-  overflow: hidden;
-  border: 1px solid black;
+  border: 1px solid #000;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Image styling */
 .card-image {
   width: 250px;
   object-fit: cover;
 }
 
-/* Card content area styling */
 .card-content {
-  padding-left: 10px;
-  padding-right: 10px;
   flex: 1;
+  padding: 0 10px;
 }
 
-/* Heading styling */
 .card-heading {
   font-size: 20px;
   margin-bottom: 8px;
 }
 
-/* Currency and date-time styling */
 .card-currency,
-.card-datetime {
+.card-region {
   font-size: 14px;
   margin-bottom: 8px;
 }
 
-/* Button styling */
 .card-buttons {
   display: flex;
   gap: 8px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .card-button {
-  padding: 8px 16px;
-  border: 2px solid blue;
-  background-color: white;
-  color: blue;
-  cursor: pointer;
   flex: 1;
+  padding: 8px 16px;
+  border: 2px solid #0056b3;
+  background-color: #fff;
+  color: #0056b3;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .card-button:hover {
   background-color: #0056b3;
-  color: white;
+  color: #fff;
 }
 </style>
