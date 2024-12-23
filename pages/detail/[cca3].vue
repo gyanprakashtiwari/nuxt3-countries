@@ -81,7 +81,7 @@ import axios from "axios";
 export default {
   setup() {
     const route = useRoute();
-    const countryName = route.params.name;
+    const countryCode = route.params.cca3;
 
     const country = ref(null);
     const neighbours = ref([]);
@@ -115,9 +115,9 @@ export default {
       error.value = null;
 
       try {
-        console.log(countryName);
+        console.log(countryCode);
         const response = await axios.get(
-          `https://restcountries.com/v3.1/alpha/${countryName}`
+          `https://restcountries.com/v3.1/alpha/${countryCode}`
         );
         if (!response.data || !response.data.length) {
           throw new Error("Country not found.");
