@@ -11,7 +11,9 @@
             class="search-input"
             placeholder="Search countries"
           />
-          <button id="search-btn" class="search-btn" @click="search">🔍</button>
+          <button id="search-btn" class="search-btn" @click="search">
+            <img src="/assets/icons/mg.png" />
+          </button>
         </div>
       </section>
 
@@ -66,7 +68,7 @@
 <script>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
-import { getCurrentDatetime } from "@/utils/datetimeUtils"; 
+import { getCurrentDatetime } from "@/utils/datetimeUtils";
 
 export default {
   setup() {
@@ -136,7 +138,7 @@ main {
 }
 
 .container {
-  width: 60%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -147,7 +149,6 @@ main {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Search Section Styling */
 #search-container {
   margin-bottom: 10px;
 }
@@ -155,7 +156,8 @@ main {
 .search-container {
   display: flex;
   align-items: center;
-  border: 1px solid #000;
+  border: 1px solid gray;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -178,21 +180,29 @@ main {
 }
 
 .search-btn:hover {
-  background-color: #f0f0f0;
+  background-color: white;
+}
+.search-btn img {
+  background-color: white;
+  color: gray;
+  height: 35px;
+  width: 35px;
 }
 
-/* Cards Section Styling */
 #cards-container {
   margin-top: 16px;
 }
 
 .card {
   display: flex;
-  background-color: #fff;
-  margin: 20px 0;
+  background-color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 10px;
-  border: 1px solid #000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid gray;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(222, 218, 218, 0.1);
 }
 
 .card-image {
@@ -201,8 +211,10 @@ main {
 }
 
 .card-content {
+  /* padding: 16px; */
+  padding-left: 10px;
+  padding-right: 10px;
   flex: 1;
-  padding: 0 10px;
 }
 
 .card-heading {
@@ -219,17 +231,20 @@ main {
 .card-buttons {
   display: flex;
   gap: 8px;
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .card-button {
   flex: 1;
   padding: 8px 16px;
-  border: 2px solid #0056b3;
-  background-color: #fff;
   color: #0056b3;
   cursor: pointer;
   transition: background-color 0.3s;
+  border: 3px solid blue;
+  border-radius: 3px;
+  background-color: white;
+  font-size: 20px;
+  font-weight: 450;
 }
 
 .card-button:hover {
